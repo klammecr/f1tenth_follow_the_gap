@@ -224,7 +224,7 @@ private:
         // Adaptive safety bubble radius
         float gain = 50.0f;
         float bias = 20.0f;
-        m_safety_bubble_rad = gain * std::max(0.0f, (m_far_thresh -closest_dist)) + bias
+        m_safety_bubble_rad = gain * std::max(0.0f, (m_far_thresh -closest_dist)) + bias;
 
         // Eliminate all points inside 'bubble' (set them to zero) 
         int min_sfty_idx = std::max(0, closest_point_idx - m_safety_bubble_rad);
