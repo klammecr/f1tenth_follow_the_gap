@@ -24,7 +24,7 @@ public:
 
         // Set the parameters
         m_safety_bubble_rad = 100;         // Width of the safety bubble (number of beams)
-        m_panic_dist = 0.1;//0.1;              // WHen to greedily go towards furthest point
+        m_panic_dist = 0.5;//0.1;              // WHen to greedily go towards furthest point
         m_lidar_smoothing_kern_size = 2; // For preprocessing lidar
         m_far_thresh = 4.0f;//4.0f;                // Threshold for meters when something wont be considered
         m_fov = 90*M_PI/180;//90 * M_PI/180; // degrees of the field of view
@@ -220,6 +220,11 @@ private:
         RCLCPP_INFO(get_logger(), oss.str());
         oss << "Closest Lidar Distance: " << closest_dist << "m" <<std::endl;
         RCLCPP_INFO(get_logger(), oss.str());
+
+        // Adaptive safety bubble radius
+        float gain = 50.0f;
+        float bias = 20.0f;
+        m_safety_bubble_rad = gain * std::max(0.0f, (m_far_thresh -closest_dist)) + bias
 
         // Eliminate all points inside 'bubble' (set them to zero) 
         int min_sfty_idx = std::max(0, closest_point_idx - m_safety_bubble_rad);
