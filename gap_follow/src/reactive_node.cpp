@@ -23,10 +23,10 @@ public:
         drive_topic, 10);
 
         // Set the parameters
-        m_safety_bubble_rad = 100;         // Width of the safety bubble (number of beams)
-        m_panic_dist = 0.5;//0.1;              // WHen to greedily go towards furthest point
+        m_safety_bubble_rad = 75;         // Width of the safety bubble (number of beams)
+        m_panic_dist = 0.40;//0.1;         // WHen to greedily go towards furthest point
         m_lidar_smoothing_kern_size = 2; // For preprocessing lidar
-        m_far_thresh = 4.0f;//4.0f;                // Threshold for meters when something wont be considered
+        m_far_thresh = 2.5f;//4.0f;      // Threshold for meters when something wont be considered
         m_fov = 90*M_PI/180;//90 * M_PI/180; // degrees of the field of view
     }
 
@@ -258,11 +258,11 @@ private:
         double velocity = 0.0;
         steering_angle = std::abs(steering_angle);
         if (steering_angle >= 0 && steering_angle < 10)
-            velocity = 1.0;
+            velocity = 3.0;
         else if (steering_angle >= 10 && steering_angle < 20)
-            velocity = 0.5;
+            velocity = 1.5;
         else
-            velocity = 0.25;
+            velocity = 0.55;
 
         // Put the velocity in the message
         drive_msg.drive.speed = velocity;
