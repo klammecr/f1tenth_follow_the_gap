@@ -28,6 +28,7 @@ public:
         m_lidar_smoothing_kern_size = 2; // For preprocessing lidar
         m_far_thresh = 2.5f;//4.0f;      // Threshold for meters when something wont be considered
         m_fov = 90*M_PI/180;//90 * M_PI/180; // degrees of the field of view
+        m_max_speed = 4.0;
     }
 
 private:
@@ -38,6 +39,7 @@ private:
     float m_gap_thresh;
     float m_consecutive_hits;
     double m_fov;
+    double m_max_speed;
 
     // For safety
     int m_safety_bubble_rad;
@@ -258,11 +260,11 @@ private:
         double velocity = 0.0;
         steering_angle = std::abs(steering_angle);
         if (steering_angle >= 0 && steering_angle < 10)
-            velocity = 3.0;
+            velocity = m_max_speed;
         else if (steering_angle >= 10 && steering_angle < 20)
-            velocity = 1.5;
+            velocity = m_max_speed*0.5;
         else
-            velocity = 0.55;
+            velocity = m_max_speed*0.25;
 
         // Put the velocity in the message
         drive_msg.drive.speed = velocity;
